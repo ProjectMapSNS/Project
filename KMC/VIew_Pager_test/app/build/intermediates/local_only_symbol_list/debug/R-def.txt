@@ -1,0 +1,25 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color purple_200
+color purple_500
+color purple_700
+color teal_200
+color teal_700
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+id tabLayout
+id textView
+id view_pager
+layout activity_main
+layout fragment_view__pager_1
+layout fragment_view__pager_2
+layout fragment_view__pager_3
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+string hello_blank_fragment
+style Theme.VIew_Pager_test
+xml backup_rules
+xml data_extraction_rules
