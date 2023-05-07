@@ -1,4 +1,4 @@
-package com.example.map_practice;
+package com.example.bottomnavigationbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,14 +21,12 @@ import com.google.android.gms.location.Priority;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -37,15 +35,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final int PERMISSIONS_REQUEST_CODE = 1;
     private Location mLastKnownLocation;
     private boolean mLocationPermissionGranted;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("locations/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //Map Fragment
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        setContentView(R.layout.activity_map);
         getLocationPermission();
 
         //FusedLocationProviderClient 초기화
@@ -67,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         };
-
     }
 
     @Override
@@ -76,18 +71,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         updateLocationUI();
         startLocationUpdates();
     }
-
-    //위치 권한 확인
     private void getLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
         }
         else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_REQUEST_CODE);
         }
     }
-
 
     //권한 요청 시 호출
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -112,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         try {
             if (mLocationPermissionGranted) {
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
 
@@ -125,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if(mLastKnownLocation!=null){
                     LatLng currentLatLng = new LatLng(mLastKnownLocation.getLatitude(),
                             mLastKnownLocation.getLongitude());
+                    myRef.setValue(currentLatLng);
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,15));
                 }
             }
@@ -143,14 +136,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     //주기적으로 위치 업데이트
     private void startLocationUpdates(){
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED
-            &&ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED
+                &&ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED){
             mFusedLocationClient.requestLocationUpdates(mLocationRequest,mLocationCallback, Looper.getMainLooper());
         }
         else{
             getLocationPermission();
         }
     }
-
-
 }

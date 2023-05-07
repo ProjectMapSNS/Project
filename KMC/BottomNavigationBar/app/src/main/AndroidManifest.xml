@@ -2,10 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- 네트워크만을 사용함 but 덜 정확함 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <!-- gps를 사용함 정확함 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> <!-- 네트워크만을 사용함 but 덜 정확함 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- gps를 사용함 정확함 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +24,20 @@
         android:theme="@style/Theme.BottomNavigationBar"
         tools:targetApi="31">
         <activity
+            android:name=".MapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false"
+            android:label="@string/title_activity_sign_up"
+            android:theme="@style/Theme.BottomNavigationBar.NoActionBar" />
+        <activity
+            android:name=".MainmenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -24,12 +45,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- android key 등록-->
-        <meta-data android:name = "com.google.android.geo.API_KEY"
-            android:value = "AIzaSyAYfaQEPCpl6zfDdelAA0aL_ZTv14gh6ZQ"/>
-
+        </activity> <!-- android key 등록 -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAYfaQEPCpl6zfDdelAA0aL_ZTv14gh6ZQ" />
     </application>
 
 </manifest>
