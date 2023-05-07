@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myStartActivity(MainmenuActivity.class);
+        /*
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             myStartActivity(MainmenuActivity.class);
-        }
+        }*/
 
     }
 

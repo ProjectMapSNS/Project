@@ -1,4 +1,4 @@
-package com.example.bottomnavigationbar;
+package com.example.map_practice;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -23,20 +24,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
-
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
@@ -44,20 +33,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int PERMISSIONS_REQUEST_CODE = 1;
     private Location mLastKnownLocation;
     private boolean mLocationPermissionGranted;
-    /*
-    private FirebaseAuth mAuth;
-    private String myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users").child(myId);
-    private DatabaseReference userRefs = FirebaseDatabase.getInstance().getReference("users");
-    private List<Marker> markers = new ArrayList<>();*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-
-        //String email = mAuth.getCurrentUser().getEmail();
-        //myRef.child("email").setValue(email);
+        //Map Fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         getLocationPermission();
@@ -82,13 +63,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         };
     }
-
-    @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
         updateLocationUI();
         startLocationUpdates();
     }
+
+    //위치 권한 확인
     private void getLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -98,6 +79,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_REQUEST_CODE);
         }
     }
+
 
     //권한 요청 시 호출
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -126,34 +108,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     return;
                 }
 
-                /*
-                userRefs.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(Marker marker:markers){
-                            marker.remove();
-                        }
-                        markers.clear();
-
-                        for(DataSnapshot userSnapshot:snapshot.getChildren()){
-                            String userId = userSnapshot.getKey();
-                            double latitude = userSnapshot.child("latitude").getValue(double.class);
-                            double longtitude = userSnapshot.child("longtitude").getValue(double.class);
-                            LatLng location = new LatLng(latitude,longtitude);
-                            MarkerOptions markerOptions = new MarkerOptions()
-                                    .position(location)
-                                    .title(userId);
-                            Marker marker = mMap.addMarker(markerOptions);
-                            markers.add(marker);
-
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });*/
-
                 //내 현재 위치 지도에 표시하는 기능
                 mMap.setMyLocationEnabled(true);
                 //내 위치를 중심으로 하는 버튼 활성화
@@ -163,8 +117,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 if(mLastKnownLocation!=null){
                     LatLng currentLatLng = new LatLng(mLastKnownLocation.getLatitude(),
                             mLastKnownLocation.getLongitude());
-                    //myRef.child("latitude").setValue(mLastKnownLocation.getLatitude());
-                    //myRef.child("longtitude").setValue(mLastKnownLocation.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,15));
                 }
             }
@@ -192,5 +144,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-
+    private void myStartActivty(Class c) {
+        Intent intent = new Intent(this, c);
+        startActivity(intent);
+    }
 }
