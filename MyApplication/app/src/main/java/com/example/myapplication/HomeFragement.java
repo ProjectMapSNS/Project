@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HomeFragement#newInstance} factory method to
@@ -64,6 +66,7 @@ public class HomeFragement extends Fragment {
         myStartActivty(MapActivity.class);
         return view;
     }
+
     private void myStartActivty(Class c) {
         Intent intent = new Intent(getActivity(), c);
         startActivity(intent);
