@@ -31,31 +31,36 @@ public class MainActivity extends AppCompatActivity {
             myStartActivity(SignUpActivity.class);
         }
         else {
-            replaceFragment(new HomeFragement());
+            replaceFragment(new HomeFragement(),false);
+
+            binding.menuBottomNavigation.setOnItemSelectedListener(item -> {
+                switch ((item.getItemId())) {
+                    case R.id.menu_home:
+                        replaceFragment(new HomeFragement(),false);
+                        break;
+                    case R.id.menu_feed:
+                        replaceFragment(new FeedFragment(),true);
+                        break;
+                    case R.id.menu_chat:
+                        replaceFragment(new ChatFragment(),true );
+                        break;
+                    case R.id.menu_profile:
+                        replaceFragment(new ProfileFragment(),true);
+                        break;
+                }
+                return true;
+
+            });
         }
-        binding.menuBottomNavigation.setOnItemSelectedListener(item -> {
-            switch ((item.getItemId())){
-                case R.id.menu_home:
-                    replaceFragment(new HomeFragement());
-                    break;
-                case R.id.menu_feed:
-                    replaceFragment(new FeedFragment());
-                    break;
-                case R.id.menu_chat:
-                    replaceFragment(new ChatFragment());
-                    break;
-                case R.id.menu_profile:
-                    replaceFragment(new ProfileFragment());
-                    break;
-            }
-            return true;
-        });
     }
 
-    private void replaceFragment(Fragment fragment){
+    private void replaceFragment(Fragment fragment,boolean addToBackStack){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.menu_frame_layout,fragment);
+        if(addToBackStack){
+            fragmentTransaction.addToBackStack(null);
+        }
         fragmentTransaction.commit();
     }
     private void myStartActivity(Class c) {

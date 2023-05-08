@@ -7,18 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".MapActivity">
 
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="로그아웃" />
 
-    <fragment
-        android:layout_width="400dp"
-        android:layout_height="600dp"
-        android:id="@+id/map"
-        tools:context=".MapActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+
 
 
 </LinearLayout>
