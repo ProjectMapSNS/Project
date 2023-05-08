@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragement">
+    tools:context=".FeedPage3Fragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <fragment
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/map"
-        tools:context=".MapActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

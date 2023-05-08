@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="로그아웃" />
     <FrameLayout
         android:id="@+id/menu_frame_layout"
         android:layout_width="match_parent"
@@ -26,4 +21,5 @@
         app:itemBackground="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/mainmenu"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

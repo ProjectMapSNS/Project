@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.bottomnavigationbar;
 
 import android.os.Bundle;
 
@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ViewPager3Fragment#newInstance} factory method to
+ * Use the {@link Mainmenu_Feed_Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ViewPager3Fragment extends Fragment {
+public class Mainmenu_Feed_Fragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class ViewPager3Fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ViewPager3Fragment() {
+    public Mainmenu_Feed_Fragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +34,11 @@ public class ViewPager3Fragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ViewPager3Fragment.
+     * @return A new instance of fragment Mainmenu_Feed_Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ViewPager3Fragment newInstance(String param1, String param2) {
-        ViewPager3Fragment fragment = new ViewPager3Fragment();
+    public static Mainmenu_Feed_Fragment newInstance(String param1, String param2) {
+        Mainmenu_Feed_Fragment fragment = new Mainmenu_Feed_Fragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class ViewPager3Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_pager3, container, false);
+        return inflater.inflate(R.layout.fragment_mainmenu__feed_, container, false);
     }
 }
